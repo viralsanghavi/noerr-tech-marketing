@@ -1,33 +1,39 @@
 import type {MetaFunction} from "@remix-run/node";
-import {motion} from "framer-motion";
-import Capabilities from "~/components/Capabalities";
+import Capabilities from "~/components/Capabilities";
+import Clients from "~/components/Clients";
 import Contact from "~/components/Contact";
+import Footer from "~/components/Footer";
 import Hero from "~/components/Hero";
-import MainLayout from "~/components/main-layout";
-import Showcase from "~/components/Showcase";
-import Testimonials from "~/components/Testimonials";
-export const meta: MetaFunction = () => {
-  return [
-    {title: "Noerr Tech"},
-    {name: "description", content: "IT services at your finger tips!"},
-  ];
-};
+import Manifesto from "~/components/Manifesto";
+import Marquee from "~/components/Marquee";
+import Method from "~/components/Method";
+import Nav from "~/components/Nav";
+import Work from "~/components/Work";
+
+export const meta: MetaFunction = () => [
+  {title: "no.err — product studio"},
+  {
+    name: "description",
+    content:
+      "Noerr Tech is a product studio in Mumbai. Design and engineering in one team — web, mobile, backend and payments, shipped and maintained.",
+  },
+];
 
 export default function Index() {
   return (
-    <MainLayout>
-      <motion.div
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="bg-primary"
-      >
+    <>
+      <Nav />
+      <main>
         <Hero />
-        <Showcase />
+        <Marquee />
+        <Work />
+        <Manifesto />
         <Capabilities />
-        <Testimonials />
+        <Method />
+        <Clients />
         <Contact />
-      </motion.div>
-    </MainLayout>
+      </main>
+      <Footer />
+    </>
   );
 }

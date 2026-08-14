@@ -6,52 +6,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        "noerr-red": "#ED7D31",
-        primary: {
-          DEFAULT: "white",
-          foreground: "hsl(var(--primary-foreground))",
+        ink: {
+          DEFAULT: "rgb(var(--ink) / <alpha-value>)",
+          soft: "rgb(var(--ink-2) / <alpha-value>)",
+          faint: "rgb(var(--ink-3) / <alpha-value>)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        paper: {
+          DEFAULT: "rgb(var(--paper) / <alpha-value>)",
+          lift: "rgb(var(--paper-2) / <alpha-value>)",
         },
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        well: {
+          DEFAULT: "rgb(var(--well) / <alpha-value>)",
+          lift: "rgb(var(--well-2) / <alpha-value>)",
+          fg: "rgb(var(--on-well) / <alpha-value>)",
+          muted: "rgb(var(--on-well-2) / <alpha-value>)",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+        accent: "rgb(var(--accent) / <alpha-value>)",
+        // Hairlines carry a fixed alpha, so they take no modifier.
+        rule: {
+          DEFAULT: "rgb(var(--ink) / 0.16)",
+          soft: "rgb(var(--ink) / 0.08)",
+          well: "rgb(var(--on-well) / 0.14)",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      // Multi-word family names must carry their own quotes — Tailwind joins the
+      // array verbatim, and one unquoted name invalidates the whole declaration.
+      fontFamily: {
+        display: ['"Playfair Display"', "Georgia", '"Times New Roman"', "serif"],
+        body: ['"IBM Plex Sans"', "system-ui", "-apple-system", "sans-serif"],
+        mono: ['"IBM Plex Mono"', "ui-monospace", '"SF Mono"', "monospace"],
+      },
+      maxWidth: {
+        shell: "1320px",
+      },
+      transitionTimingFunction: {
+        resolve: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },

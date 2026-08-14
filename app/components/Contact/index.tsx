@@ -1,35 +1,44 @@
-import {NavLink} from "@remix-run/react";
-import CommonContainer from "../CommonContainer";
-import {ContactForm} from "./ContactForm";
+import Container from "~/components/Container";
+import Reveal from "~/components/motion/Reveal";
+import {CONTACT_EMAIL, CONTACT_FACTS} from "~/data/site";
 
-const Contact = () => {
-  return (
-    <CommonContainer>
-      <section className="relative py-20 flex">
-        {/* Narrower orange sidebar */}
-        <div
-          className="h-[320px] bg-noerr-red rounded-sm px-8 py-6 text-black flex items-center gap-4 justify-center"
-          style={{writingMode: "vertical-rl"}}
+const Contact = () => (
+  <section id="contact" className="scroll-mt-20 bg-well py-16 text-well-fg lg:py-[132px]">
+    <Container className="grid items-start gap-8 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
+      <Reveal>
+        <p className="label text-well-muted">06 — Start</p>
+        <h2 className="mb-5 mt-3.5 text-balance font-display text-[clamp(32px,5.4vw,68px)] font-normal leading-[1.05] tracking-[-0.02em]">
+          Tell us what you&apos;re building.
+        </h2>
+        <p className="m-0 mb-7 max-w-[46ch] text-well-muted">
+          Send the shape of it — what it does, who it&apos;s for, when you need it live.
+          You&apos;ll get a considered reply, not a brochure.
+        </p>
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="inline-block border-b border-accent pb-1 font-display text-[clamp(20px,2.6vw,31px)] transition-colors hover:text-accent"
         >
-          <div className="bg-white h-full w-[1px]" />
-          <h2 className="text-2xl font-medium tracking-wide transform h-full -rotate-180">
-            Contact to expert
-          </h2>
-        </div>
-        <div className="pl-[40px] text-black z-10 bg-transparent mt-12 max-w-screen-xl">
-          <h1 className="font-semibold text-4xl leading-tight tracking-wider mb-12">
-            Two working days response time
-          </h1>
+          {CONTACT_EMAIL}
+        </a>
+      </Reveal>
 
-          <div className="ml-[80px] space-y-6 text-[#CCCCCC] text-lg leading-relaxed max-w-screen-md">
-            <p>If you want urgent meeting direct call to us..............</p>
-          </div>
-          <h1 className="text-2xl font-semibold tracking-wide">Start a conversation</h1>
-          <ContactForm />
-        </div>
-      </section>
-    </CommonContainer>
-  );
-};
+      <Reveal delay={0.1}>
+        <dl className="m-0 flex flex-col border-t border-rule-well">
+          {CONTACT_FACTS.map(({id, label, value}) => (
+            <div
+              key={id}
+              className="flex justify-between gap-4 border-b border-rule-well py-[15px] text-sm"
+            >
+              <dt className="font-mono text-[11px] uppercase tracking-[0.1em] text-well-muted">
+                {label}
+              </dt>
+              <dd className="m-0 text-right">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </Reveal>
+    </Container>
+  </section>
+);
 
 export default Contact;
