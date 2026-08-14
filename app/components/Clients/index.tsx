@@ -2,7 +2,7 @@ import {motion, useReducedMotion} from "framer-motion";
 import Container from "~/components/Container";
 import Reveal, {RESOLVE_EASE} from "~/components/motion/Reveal";
 import type {Testimonial} from "~/data/site";
-import {SAMPLE_TESTIMONIALS} from "~/data/site";
+import {TESTIMONIALS} from "~/data/site";
 
 const Clients = () => (
   <section id="clients" className="scroll-mt-20 py-20 lg:py-32">
@@ -21,7 +21,7 @@ const Clients = () => (
       </Reveal>
 
       <div className="grid gap-5 lg:grid-cols-3 lg:gap-6">
-        {SAMPLE_TESTIMONIALS.map((testimonial, i) => (
+        {TESTIMONIALS.map((testimonial, i) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} order={i} />
         ))}
       </div>

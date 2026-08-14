@@ -1,0 +1,54 @@
+name: Deploy
+
+# Two triggers: ordinary code pushes, and content edits. Sanity fires the second
+# one via a webhook -> repository_dispatch, because the site bakes its copy in at
+# build time and a published edit is not live until it is rebuilt.
+#
+# Required repository secret:
+#   FIREBASE_SERVICE_ACCOUNT  JSON key for a service account with the
+#                             "Firebase Hosting Admin" role on project
+#                             noerr-marketing.
+#
+# The Sanity read is unauthenticated because the production dataset is public.
+# If that changes, add a SANITY_API_READ_TOKEN secret and pass it through to the
+# content step — never with a VITE_ prefix, which would inline it into the bundle.
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [sanity-content-published]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Refresh copy from Sanity. On a code push this is usually a no-op; on a
+      # content dispatch it is the whole point. Failure here stops the deploy
+      # rather than shipping a half-fetched site.
+      - name: Pull content from Sanity
+        run: npm run content
+
+      - run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: noerr-marketing
+          channelId: live

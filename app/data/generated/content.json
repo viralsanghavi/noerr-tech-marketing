@@ -1,0 +1,407 @@
+{
+  "settings": {
+    "contactEmail": "noerrtech@gmail.com",
+    "marqueeItems": [
+      "React",
+      "Next.js",
+      "Remix",
+      "Flutter",
+      "Three.js",
+      "GSAP",
+      "Node",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Supabase",
+      "Firebase",
+      "Razorpay",
+      "Stripe",
+      "OpenAI",
+      "Tailwind"
+    ]
+  },
+  "projects": [
+    {
+      "id": "cd2fd1df-405b-45ad-9bcf-d3880f1dc658",
+      "name": "RareSquare Studio",
+      "client": "RareSquare",
+      "sector": "Ecommerce",
+      "year": "2025",
+      "headline": "Gifts as rare as the ones you love.",
+      "summary": "Personalised gifting storefront with a full commerce backend behind it — catalogue, cart, orders, payments and an admin panel, built as a monorepo so the storefront and dashboard ship independently.",
+      "stack": [
+        "Turborepo",
+        "Prisma",
+        "PostgreSQL",
+        "Supabase",
+        "Razorpay",
+        "Firebase"
+      ],
+      "href": "https://raresquare.web.app",
+      "mediaSlug": "raresquare"
+    },
+    {
+      "id": "39fd8cbf-4325-4e72-8052-d8ee0a459f50",
+      "name": "Dermalicious",
+      "client": "Dermalicious Clinic",
+      "sector": "Healthcare",
+      "year": "2025",
+      "headline": "Integrated multi-specialty healthcare.",
+      "summary": "A credibility-first clinic site for a practice where trust decides whether someone books. Server-rendered for search, with treatment structure and enquiry paths designed around how patients actually arrive.",
+      "stack": [
+        "React Router",
+        "GSAP",
+        "SSR"
+      ],
+      "href": "https://dermalicious-noerr.web.app",
+      "mediaSlug": "dermalicious"
+    },
+    {
+      "id": "cec153f2-21f5-4a0c-a61b-dbb6ad6b0054",
+      "name": "South Mumbai United",
+      "client": "South Mumbai United FC",
+      "sector": "Sport",
+      "year": "2025",
+      "headline": "The club, online.",
+      "summary": "Digital home for a Mumbai football club — squad, fixtures and club identity, built to hold up when matchday traffic spikes and the whole supporter base arrives at once.",
+      "stack": [
+        "React",
+        "Firebase"
+      ],
+      "href": "https://reactsmu.web.app",
+      "mediaSlug": "south-mumbai-united"
+    },
+    {
+      "id": "bf5358e4-a6cf-43ea-92e0-edb58d334b54",
+      "name": "Tara Staycation",
+      "client": "Tara Staycation",
+      "sector": "Hospitality",
+      "year": "2025",
+      "headline": "Somewhere worth staying.",
+      "summary": "Property and booking presence for a staycation brand, where the photography carries the sell and the enquiry path stays short enough that people finish it.",
+      "stack": [
+        "React Router",
+        "Framer Motion",
+        "Tailwind"
+      ],
+      "href": "https://tarastaycation.web.app",
+      "mediaSlug": "tara-staycation"
+    },
+    {
+      "id": "6bc7709d-b18b-4e30-8f4c-8f86eca10753",
+      "name": "Rait Studio",
+      "client": "Rait Studio",
+      "sector": "Creative",
+      "year": "2025",
+      "headline": "A studio that looks like one.",
+      "summary": "Portfolio platform for a creative studio — the work has to be the interface, so the layout gets out of the way and the imagery does the arguing.",
+      "stack": [
+        "React Router",
+        "Tailwind"
+      ],
+      "href": "https://rait-studio.web.app",
+      "mediaSlug": "rait-studio"
+    },
+    {
+      "id": "3c266079-6e85-43df-8479-021417fa2190",
+      "name": "Krishnotsavam 2026",
+      "client": "Procreate Experiences",
+      "sector": "Live events",
+      "year": "2026",
+      "headline": "Three nights, one celebration.",
+      "summary": "Launch site for a devotional music festival at Surat's Advaitaa Ballroom — three nights, three programmes, a lineup of artists and a live countdown to the doors opening. Scroll-led throughout, with everything bending toward the one action that matters: reserve a seat before the hall fills.",
+      "stack": [
+        "Next.js",
+        "GSAP",
+        "Framer Motion",
+        "Tailwind",
+        "Firebase"
+      ],
+      "href": "https://riya-krishna.web.app",
+      "mediaSlug": "krishnotsavam"
+    },
+    {
+      "id": "31fb3d03-0483-4a3d-8c32-0c04a5e687bc",
+      "name": "Neptune Container",
+      "client": "Neptune Container Line & Logistics",
+      "sector": "Shipping & logistics",
+      "year": "2025",
+      "headline": "Move complex cargo across India and the world.",
+      "summary": "A logistics platform that has to read as institutionally solid — containerised, project and hazardous freight, twelve Indian branches, a global agent network. Motion-led marketing surface plus dedicated event microsites for Pacific Shipping Summit, Breakbulk Americas and TransportLogistics.",
+      "stack": [
+        "React",
+        "Three.js",
+        "GSAP",
+        "Framer Motion",
+        "Tailwind"
+      ],
+      "href": "https://neptune-containers.web.app",
+      "mediaSlug": "neptune"
+    }
+  ],
+  "shipped": [
+    {
+      "id": "d83f502f-cd30-4092-9c3d-741ea480f8b2",
+      "name": "Mystery Crate",
+      "sector": "D2C · Mobile",
+      "stack": "Flutter · Amplify · Next.js"
+    },
+    {
+      "id": "0c2d3a27-8031-4397-a551-5ef13bf7ba51",
+      "name": "Akshar Studio",
+      "sector": "Creative tools",
+      "stack": "Next.js · Three.js"
+    },
+    {
+      "id": "82207c25-3b44-489b-a727-8d920f890248",
+      "name": "FounderBrain",
+      "sector": "AI · SaaS",
+      "stack": "Next.js · OpenAI"
+    },
+    {
+      "id": "313ea8a1-2f46-40f8-92bc-f2acb5d48367",
+      "name": "Mumma Approved",
+      "sector": "D2C content",
+      "stack": "Next.js"
+    },
+    {
+      "id": "a348f1eb-2470-429e-af7b-0493d5accdc1",
+      "name": "JT Ecommerce",
+      "sector": "Ecommerce",
+      "stack": "Remix"
+    },
+    {
+      "id": "d1fc4998-10fc-4f6c-a031-2e9a465137f8",
+      "name": "Sportz Interactive",
+      "sector": "Sport tech",
+      "stack": "Full stack"
+    },
+    {
+      "id": "c213aea7-9f96-42ed-a386-eba1146c31cd",
+      "name": "Thakor Electronics",
+      "sector": "Retail",
+      "stack": "React"
+    },
+    {
+      "id": "21cf1bfc-492d-449c-af8f-deb7d5cb6ead",
+      "name": "FlexHale Physio",
+      "sector": "Healthcare",
+      "stack": "React"
+    },
+    {
+      "id": "4edb7027-c6a8-4113-8e79-13a8ee6b6e19",
+      "name": "Noerr Invoicing",
+      "sector": "Internal tooling",
+      "stack": "Next.js · PostgreSQL"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "83b02e5c-53ff-49b5-952f-32d271db8032",
+      "eyebrow": "Interface",
+      "title": "Product design",
+      "summary": "Identity, interface and motion design for products that have to feel considered on first open.",
+      "tools": [
+        "UI systems",
+        "Design tokens",
+        "Motion",
+        "Prototypes"
+      ]
+    },
+    {
+      "id": "5a31411d-009b-4533-bd67-1527901b59bc",
+      "eyebrow": "Front of house",
+      "title": "Web platforms",
+      "summary": "Marketing sites and full applications, server-rendered where it matters for speed and search.",
+      "tools": [
+        "Next.js",
+        "Remix",
+        "React Router",
+        "Tailwind",
+        "Three.js",
+        "GSAP"
+      ]
+    },
+    {
+      "id": "99698595-5de9-42f2-8f1f-f82300a90a33",
+      "eyebrow": "In hand",
+      "title": "Mobile",
+      "summary": "Cross-platform apps shipped to both stores, sharing one backend with the web product.",
+      "tools": [
+        "Flutter",
+        "Amplify",
+        "Push & auth"
+      ]
+    },
+    {
+      "id": "2363d394-c098-4982-bcd3-4cdd6234fc6a",
+      "eyebrow": "Underneath",
+      "title": "Backend & data",
+      "summary": "APIs, schemas and the boring reliability work — the part that decides whether launch holds.",
+      "tools": [
+        "Node",
+        "NestJS",
+        "Express",
+        "PostgreSQL",
+        "Prisma",
+        "Supabase",
+        "Firebase"
+      ]
+    },
+    {
+      "id": "50209ad1-1d4f-4e24-ba08-d444e5c0b96b",
+      "eyebrow": "Money",
+      "title": "Commerce & payments",
+      "summary": "Checkout, subscriptions and invoicing wired to real gateways, tested against real edge cases.",
+      "tools": [
+        "Razorpay",
+        "Stripe",
+        "Sanity",
+        "Invoicing"
+      ]
+    },
+    {
+      "id": "104babb3-9f56-4c42-a956-9b06709487e2",
+      "eyebrow": "New",
+      "title": "AI features",
+      "summary": "Model-backed features built into products — transcription, extraction, generation — not bolted on as a demo.",
+      "tools": [
+        "OpenAI",
+        "Voice capture",
+        "Structured output"
+      ]
+    }
+  ],
+  "methodSteps": [
+    {
+      "id": "57770657-c1b1-46a2-9cb9-5d47d3609ccc",
+      "eyebrow": "Draft one",
+      "title": "Define",
+      "summary": "What the product owes its user, and the shortest route there. Scope gets cut here, not mid-build.",
+      "state": "draft"
+    },
+    {
+      "id": "ab974e04-786a-4ab1-b564-f98ef2f4dc8b",
+      "eyebrow": "Draft two",
+      "title": "Design",
+      "summary": "Interface and system in one pass, in the browser early, so what you approve is what runs.",
+      "state": "draft"
+    },
+    {
+      "id": "f3efbd56-3bd7-410b-b659-0fff1e852a06",
+      "eyebrow": "Draft three",
+      "title": "Build",
+      "summary": "Typed, reviewed, deployed on a real pipeline — with the backend built by the same people.",
+      "state": "draft"
+    },
+    {
+      "id": "4371f436-1574-4df3-aecb-44ee6c158ee8",
+      "eyebrow": "Resolved",
+      "title": "Hold",
+      "summary": "We stay on after launch. Monitoring, fixes, the next release — the version that ships clean stays clean.",
+      "state": "resolved"
+    }
+  ],
+  "stats": [
+    {
+      "id": "efb9eb3f-f96c-4c61-a839-efcc22f9b075",
+      "value": "30+",
+      "label": "Products shipped"
+    },
+    {
+      "id": "6fbd5314-11ca-4aa3-9b35-11169754f627",
+      "value": "9",
+      "label": "Industries"
+    },
+    {
+      "id": "2056beab-279e-43d1-a593-61085141d8cc",
+      "value": "6",
+      "label": "Live platforms maintained"
+    },
+    {
+      "id": "59d1ad36-4e63-4004-abb9-8a87ba1e8917",
+      "value": "1",
+      "label": "Team, end to end"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "f90b1921-beed-4757-91d0-72081ba4ab07",
+      "status": "placeholder",
+      "quote": "We came in with a half-finished build and a launch date we couldn't move. They took the whole thing over, shipped in five weeks, and it hasn't gone down since.",
+      "metric": "Live in 5 weeks",
+      "name": "Priya Raghavan",
+      "role": "Founder",
+      "company": "Kestrel & Co",
+      "initials": "PR"
+    },
+    {
+      "id": "89c03c4e-b8fd-4085-8156-43a39d7b0f35",
+      "status": "placeholder",
+      "quote": "Checkout was losing us orders and nobody could tell us why. They found it in two days and rebuilt the flow properly.",
+      "metric": "Conversion 1.4% → 3.9%",
+      "name": "Daniel Okoye",
+      "role": "Head of Ecommerce",
+      "company": "Northbay Supply",
+      "initials": "DO"
+    },
+    {
+      "id": "838ea695-fe1d-404a-b1f3-b25a43c7c928",
+      "status": "placeholder",
+      "quote": "The only team we've worked with that actually stayed after launch. Two years on, they still ship every release for us.",
+      "metric": "2 years, still shipping",
+      "name": "Meera Shah",
+      "role": "Chief Operating Officer",
+      "company": "Lantern Health",
+      "initials": "MS"
+    }
+  ],
+  "contactFacts": [
+    {
+      "id": "829b960d-9e67-49d0-9fd7-0b6c426f7a78",
+      "label": "Response",
+      "value": "Within 2 working days"
+    },
+    {
+      "id": "4dc40025-10da-4443-8bea-dbf6cc773ef6",
+      "label": "Engagements",
+      "value": "Project · Retainer"
+    },
+    {
+      "id": "36cf0b48-ab65-44fa-b8e2-cee635351a1c",
+      "label": "Based",
+      "value": "Mumbai, India"
+    },
+    {
+      "id": "e3306f1e-7261-4ed7-87e4-91d9d0e9a021",
+      "label": "Working with",
+      "value": "India · US · UK"
+    }
+  ],
+  "navLinks": [
+    {
+      "id": "e2289bd5-fdf2-4af0-bcd6-5fbda0ebef85",
+      "name": "Work",
+      "href": "#work",
+      "variant": "text"
+    },
+    {
+      "id": "91bd6637-fd13-49ea-a642-ec03ca6cd0ab",
+      "name": "Capabilities",
+      "href": "#capabilities",
+      "variant": "text"
+    },
+    {
+      "id": "b93f33e9-5714-4fbc-949d-582185163576",
+      "name": "Method",
+      "href": "#method",
+      "variant": "text"
+    },
+    {
+      "id": "faf88674-bcf9-4603-9f56-ee67dc09ff62",
+      "name": "Start a project",
+      "href": "#contact",
+      "variant": "button"
+    }
+  ]
+}

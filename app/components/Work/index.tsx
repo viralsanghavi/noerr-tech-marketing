@@ -8,9 +8,15 @@ import {useMediaQuery} from "~/hooks/useMediaQuery";
 
 /**
  * Panel width and gutter in vw; the sideways travel follows from them.
- * With 6 projects this is 269vw, so the pin needs 369vh of scroll — kept as the
- * literal `lg:h-[369vh]` below because Tailwind cannot read a computed value.
- * Change the panel geometry or the project count and that class moves with it.
+ * With 7 projects this is 330vw, so the pin wants 430vh of scroll (travel plus
+ * the one viewport the sticky child occupies) — kept as the literal
+ * `lg:h-[430vh]` below because Tailwind cannot read a computed value.
+ *
+ * The travel always completes regardless of this number, since scroll progress
+ * is normalised 0→1 across the track. What the number sets is the *rate*: at
+ * travel + 100vh, one vh of scroll moves the strip roughly one vw. Leave it
+ * stale after changing the panel geometry or the project count and the strip
+ * just skates past faster than it reads.
  */
 const PANEL_VW = 58;
 const GAP_VW = 3;
@@ -51,14 +57,18 @@ const Work = () => {
         progress. Below lg it degrades to a native horizontal swipe, which is
         the gesture a phone already has.
       */}
-      <div ref={trackRef} className="relative lg:h-[369vh]">
+      <div ref={trackRef} className="relative lg:h-[430vh]">
         <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:overflow-hidden">
           <motion.div
             style={pinned ? {x} : undefined}
             className="flex snap-x snap-mandatory items-start gap-4 overflow-x-auto px-5 pb-4 sm:px-8 lg:snap-none lg:gap-[3vw] lg:overflow-visible lg:px-[72px] lg:pb-0"
           >
-            {PROJECTS.map((project) => (
-              <ProjectPanel key={project.id} project={project} />
+            {PROJECTS.map((project, position) => (
+              <ProjectPanel
+                key={project.id}
+                project={project}
+                index={String(position + 1).padStart(2, "0")}
+              />
             ))}
           </motion.div>
         </div>
@@ -93,10 +103,12 @@ export default Work;
 
 type ProjectPanelProps = {
   project: Project;
+  /** Display number, derived from list position so reordering can't desync it. */
+  index: string;
 };
 
-const ProjectPanel = ({project}: ProjectPanelProps) => {
-  const {index, name, sector, year, headline, summary, stack, image, video, href} = project;
+const ProjectPanel = ({project, index}: ProjectPanelProps) => {
+  const {name, sector, year, headline, summary, stack, image, video, href} = project;
   const panelRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = useReducedMotion();

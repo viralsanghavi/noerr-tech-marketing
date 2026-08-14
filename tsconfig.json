@@ -7,6 +7,9 @@
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx"
   ],
+  // The Studio is a separate app with its own tsconfig and its own React
+  // version — typechecking it from here would resolve the wrong types.
+  "exclude": ["node_modules", "studio-noerr-tech"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["@remix-run/node", "vite/client"],

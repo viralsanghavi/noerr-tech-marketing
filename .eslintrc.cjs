@@ -19,7 +19,8 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["!**/.server", "!**/.client"],
+  // The Studio lints itself with its own flat config (studio-noerr-tech/eslint.config.mjs).
+  ignorePatterns: ["!**/.server", "!**/.client", "studio-noerr-tech"],
 
   // Base config
   extends: ["eslint:recommended"],
@@ -78,6 +79,20 @@ module.exports = {
       files: [".eslintrc.cjs"],
       env: {
         node: true,
+      },
+    },
+
+    // Build scripts. Node globals, but capture-work.mjs also holds page.evaluate
+    // callbacks that really do run in a browser, so both envs are correct here.
+    {
+      files: ["scripts/**/*.mjs"],
+      env: {
+        node: true,
+        browser: true,
+      },
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
       },
     },
   ],
