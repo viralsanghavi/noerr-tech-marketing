@@ -88,6 +88,20 @@
   }
 }
 
+/* Slow wander for the trust band's glow blobs; the glass cards blur them. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(12%, -8%) scale(1.12);
+  }
+  66% {
+    transform: translate(-10%, 10%) scale(0.92);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

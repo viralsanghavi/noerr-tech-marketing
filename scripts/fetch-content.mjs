@@ -1,7 +1,6 @@
 /**
  * Pulls every piece of site copy out of Sanity and writes it to
- * app/data/generated/content.json, which app/data/site.ts validates and serves
- * to the components.
+ * app/data/generated/content.json, which app/data/site.ts serves to the routes.
  *
  *   node scripts/fetch-content.mjs
  *
@@ -22,8 +21,8 @@ import {contentSchema} from './content.schema.mjs'
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = resolve(ROOT, 'app/data/generated/content.json')
 
-const projectId = process.env.VITE_SANITY_PROJECT_ID ?? '8unjg8gl'
-const dataset = process.env.VITE_SANITY_DATASET ?? 'production'
+const projectId = process.env.SANITY_PROJECT_ID ?? '8unjg8gl'
+const dataset = process.env.SANITY_DATASET ?? 'production'
 
 const client = createClient({
   projectId,
@@ -31,9 +30,9 @@ const client = createClient({
   // Pinned deliberately: a floating date would let API behaviour drift under us.
   apiVersion: '2025-08-14',
   useCdn: false, // Always build from the latest published content.
-  // The dataset is public, so no token. If it is ever made private, add
-  // token: process.env.SANITY_API_READ_TOKEN here — never a VITE_ name, or it
-  // would be inlined into the client bundle.
+  // The dataset is public, so no token is needed. If it is ever made private,
+  // read one from process.env here — never under a VITE_ name, which would
+  // inline it into the client bundle.
 })
 
 /** One round trip; every list ordered by the drag-and-drop rank from the Studio. */

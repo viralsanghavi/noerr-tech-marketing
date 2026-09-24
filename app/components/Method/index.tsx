@@ -1,137 +1,148 @@
-import {motion, useReducedMotion} from "framer-motion";
+import {motion, useReducedMotion, useTransform} from "framer-motion";
+import type {MotionValue} from "framer-motion";
 import Container from "~/components/Container";
 import Reveal, {RESOLVE_EASE} from "~/components/motion/Reveal";
-import {METHOD_STEPS} from "~/data/site";
+import ThreeStage from "~/components/three/ThreeStage";
+import type {MethodStep} from "~/data/types";
+import {useSceneAvailability} from "~/hooks/useSceneAvailability";
 import {cn} from "~/lib/utils";
 
-const Method = () => {
+const loadBuild = () =>
+  import("~/components/three/scenes/build").then((module) => module.mountBuild);
+
+type MethodProps = {steps: MethodStep[]};
+
+/**
+ * Desktop with motion: a pinned isometric build — plot, outlines, buildings,
+ * lights — with the steps beside it filling in as each phase plays. Elsewhere:
+ * the four steps as a grid.
+ */
+const Method = ({steps}: MethodProps) => {
   const prefersReducedMotion = useReducedMotion();
+  const {sceneEnabled, markSceneUnavailable} = useSceneAvailability();
 
   return (
-    <section id="method" className="scroll-mt-20 bg-paper-lift py-20 lg:py-32">
-      <Container>
-        <Reveal className="mb-12 grid gap-4 md:grid-cols-[160px_1fr] md:gap-12 lg:mb-20">
-          <p className="label pt-3">04 — Method</p>
-          <div>
-            <h2 className="m-0 max-w-[18ch] text-balance font-display text-[clamp(32px,5.5vw,72px)] font-normal leading-[1.04] tracking-[-0.025em]">
-              Why the name is a promise.
-            </h2>
-            <p className="mt-5 max-w-[54ch] text-lg text-ink-soft">
-              The mark sets our name three times — two drafts ghosted, one resolved. That is
-              the process, not a graphic.
-            </p>
+    <section
+      id="method"
+      className={cn("scroll-mt-20 bg-paper-lift", !sceneEnabled && "py-20 lg:py-32")}
+    >
+      {sceneEnabled ? (
+        <ThreeStage
+          loadScene={loadBuild}
+          data={null}
+          screens={3}
+          onUnavailable={markSceneUnavailable}
+        >
+          {(progress) => (
+            <Container className="flex h-full items-center">
+              <div className="grid max-w-[440px] gap-8">
+                <div className="grid gap-3">
+                  <MethodIntro size="compact" />
+                </div>
+                <ol className="m-0 grid list-none gap-4 p-0">
+                  {steps.map((step, i) => (
+                    <StepProgress
+                      key={step.id}
+                      step={step}
+                      position={i}
+                      count={steps.length}
+                      progress={progress}
+                    />
+                  ))}
+                </ol>
+              </div>
+            </Container>
+          )}
+        </ThreeStage>
+      ) : (
+        <Container>
+          <Reveal className="mb-12 grid gap-4 md:grid-cols-[160px_1fr] md:gap-12 lg:mb-20">
+            <MethodIntro size="full" />
+          </Reveal>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-9">
+            {steps.map(({id, eyebrow, title, summary, resolved}, i) => (
+              <div key={id} className="pt-[18px]">
+                <motion.span
+                  initial={prefersReducedMotion ? false : {scaleX: 0}}
+                  whileInView={{scaleX: 1}}
+                  viewport={{once: true}}
+                  transition={{duration: 0.7, ease: RESOLVE_EASE, delay: i * 0.1}}
+                  className={cn("mb-3 block h-0.5 origin-left", resolved ? "bg-accent" : "bg-ink")}
+                />
+                <motion.div
+                  initial={prefersReducedMotion ? false : {opacity: 0, y: 14}}
+                  whileInView={{opacity: 1, y: 0}}
+                  viewport={{once: true}}
+                  transition={{duration: 0.6, ease: RESOLVE_EASE, delay: i * 0.1 + 0.15}}
+                >
+                  <p className="label">{eyebrow}</p>
+                  <h3 className="mb-2 mt-3 font-display text-[21px] font-normal">{title}</h3>
+                  <p className="m-0 text-[14.5px] text-ink-soft">{summary}</p>
+                </motion.div>
+              </div>
+            ))}
           </div>
-        </Reveal>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-9">
-          {METHOD_STEPS.map(({id, eyebrow, title, summary, resolved}, i) => (
-            <div key={id} className="pt-[18px]">
-              <motion.span
-                initial={prefersReducedMotion ? false : {scaleX: 0}}
-                whileInView={{scaleX: 1}}
-                viewport={{once: true}}
-                transition={{duration: 0.7, ease: RESOLVE_EASE, delay: i * 0.1}}
-                className={cn(
-                  "mb-3 block h-0.5 origin-left",
-                  resolved ? "bg-accent" : "bg-ink"
-                )}
-              />
-              <motion.div
-                initial={prefersReducedMotion ? false : {opacity: 0, y: 14}}
-                whileInView={{opacity: 1, y: 0}}
-                viewport={{once: true}}
-                transition={{duration: 0.6, ease: RESOLVE_EASE, delay: i * 0.1 + 0.15}}
-              >
-                <p className="label">{eyebrow}</p>
-                <h3 className="mb-2 mt-3 font-display text-[21px] font-normal">{title}</h3>
-                <p className="m-0 text-[14.5px] text-ink-soft">{summary}</p>
-              </motion.div>
-            </div>
-          ))}
-        </div>
-
-        <BuildLog reduced={Boolean(prefersReducedMotion)} />
-      </Container>
+        </Container>
+      )}
     </section>
   );
 };
 
 export default Method;
 
-/**
- * The real pipeline output for this site, replayed on scroll. Every figure is
- * this repo's actual build — the claim is checkable against `npm run build`.
- */
-const LOG_LINES = [
-  {id: "cmd", label: "$ noerr ship", value: "", tone: "cmd"},
-  {id: "typecheck", label: "typecheck", value: "0 errors", tone: "ok"},
-  {id: "lint", label: "lint", value: "0 errors", tone: "ok"},
-  {id: "build", label: "build", value: "405 modules · 1.02s", tone: "info"},
-  {id: "bundle", label: "bundle", value: "52.87 kB gzip", tone: "info"},
-  {id: "deploy", label: "deploy", value: "live", tone: "info"},
-] as const;
+type MethodIntroProps = {
+  /** Compact fits beside the pinned scene, where the steps share the viewport. */
+  size: "compact" | "full";
+};
 
-type BuildLogProps = {reduced: boolean};
-
-const BuildLog = ({reduced}: BuildLogProps) => (
-  <motion.div
-    initial={reduced ? false : {opacity: 0, y: 24}}
-    whileInView={{opacity: 1, y: 0}}
-    viewport={{once: true, margin: "0px 0px -12% 0px"}}
-    transition={{duration: 0.7, ease: RESOLVE_EASE}}
-    className="mt-16 overflow-hidden rounded-lg border border-rule bg-paper lg:mt-24"
-  >
-    <div className="flex items-center gap-2 border-b border-rule-soft px-5 py-3">
-      <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-      <span className="label">noerr — production pipeline</span>
-    </div>
-
-    <div className="overflow-x-auto p-5 lg:p-8">
-      <motion.pre
-        whileInView="run"
-        viewport={{once: true}}
-        initial={reduced ? "run" : "idle"}
-        variants={{idle: {}, run: {transition: {staggerChildren: 0.16, delayChildren: 0.2}}}}
-        className="m-0 font-mono text-[13px] leading-[2] lg:text-sm"
+const MethodIntro = ({size}: MethodIntroProps) => (
+  <>
+    <p className={cn("label m-0", size === "full" && "pt-3")}>04 — How we work</p>
+    <div>
+      <h2
+        className={cn(
+          "m-0 max-w-[18ch] text-balance font-display font-normal leading-[1.04] tracking-[-0.025em]",
+          size === "full" ? "text-[clamp(32px,4.6vw,64px)]" : "text-[clamp(28px,3vw,44px)]",
+        )}
       >
-        {LOG_LINES.map(({id, label, value, tone}) => (
-          <motion.div
-            key={id}
-            variants={{idle: {opacity: 0, x: -8}, run: {opacity: 1, x: 0}}}
-            transition={{duration: 0.35, ease: RESOLVE_EASE}}
-            className="flex flex-wrap items-baseline gap-x-3 whitespace-nowrap"
-          >
-            {tone === "cmd" ? (
-              <span className="text-ink">{label}</span>
-            ) : (
-              <>
-                <span className="text-accent">›</span>
-                <span className="text-ink-soft">{label}</span>
-                <span aria-hidden="true" className="text-ink-faint/40">
-                  ····························
-                </span>
-                <span className={tone === "ok" ? "text-ink" : "text-ink-soft"}>{value}</span>
-              </>
-            )}
-          </motion.div>
-        ))}
-
-        <motion.div
-          variants={{idle: {opacity: 0}, run: {opacity: 1}}}
-          transition={{duration: 0.4, ease: RESOLVE_EASE}}
-          className="mt-3 flex items-baseline gap-3 border-t border-rule-soft pt-3"
-        >
-          <span className="text-accent">✓</span>
-          <span className="text-ink">shipped clean</span>
-          {reduced ? null : (
-            <motion.span
-              animate={{opacity: [1, 1, 0, 0]}}
-              transition={{duration: 1.1, repeat: Infinity, times: [0, 0.5, 0.5, 1]}}
-              className="inline-block h-[1.1em] w-[0.55em] translate-y-[0.15em] bg-accent"
-            />
-          )}
-        </motion.div>
-      </motion.pre>
+        No jargon. No surprises. <span className="text-accent">You see every step.</span>
+      </h2>
+      <p className={cn("max-w-[48ch] text-ink-soft", size === "full" ? "mt-5 text-lg" : "mt-3 text-[15px]")}>
+        You approve each step before we move to the next — and once it&rsquo;s live, we stay to
+        keep it running.
+      </p>
     </div>
-  </motion.div>
+  </>
 );
+
+type StepProgressProps = {
+  step: MethodStep;
+  position: number;
+  count: number;
+  progress: MotionValue<number>;
+};
+
+/** One step in the pinned list: lights up when its phase starts, fills as it plays. */
+const StepProgress = ({step, position, count, progress}: StepProgressProps) => {
+  const start = position / count;
+  const end = (position + 1) / count;
+  const fill = useTransform(progress, [start, end - 0.03], [0, 1]);
+  const opacity = useTransform(progress, [start - 0.05, start], [0.4, 1]);
+
+  return (
+    <li>
+      <motion.div style={{opacity}}>
+        <p className="label m-0">{step.eyebrow}</p>
+        <h3 className="mb-1 mt-1.5 font-display text-[21px] font-normal">{step.title}</h3>
+        <p className="m-0 line-clamp-1 text-[13.5px] text-ink-soft">{step.summary}</p>
+      </motion.div>
+      <span aria-hidden="true" className="relative mt-2.5 block h-px bg-rule">
+        <motion.span
+          style={{scaleX: fill}}
+          className={cn("absolute inset-0 block origin-left", step.resolved ? "bg-accent" : "bg-ink")}
+        />
+      </span>
+    </li>
+  );
+};

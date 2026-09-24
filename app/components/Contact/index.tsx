@@ -1,8 +1,10 @@
 import Container from "~/components/Container";
 import Reveal from "~/components/motion/Reveal";
-import {CONTACT_EMAIL, CONTACT_FACTS} from "~/data/site";
+import type {Fact} from "~/data/types";
 
-const Contact = () => (
+type ContactProps = {email: string; facts: Fact[]};
+
+const Contact = ({email, facts}: ContactProps) => (
   <section id="contact" className="scroll-mt-20 bg-well py-16 text-well-fg lg:py-[132px]">
     <Container className="grid items-start gap-8 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
       <Reveal>
@@ -15,16 +17,16 @@ const Contact = () => (
           You&apos;ll get a considered reply, not a brochure.
         </p>
         <a
-          href={`mailto:${CONTACT_EMAIL}`}
+          href={`mailto:${email}`}
           className="inline-block border-b border-accent pb-1 font-display text-[clamp(20px,2.6vw,31px)] transition-colors hover:text-accent"
         >
-          {CONTACT_EMAIL}
+          {email}
         </a>
       </Reveal>
 
       <Reveal delay={0.1}>
         <dl className="m-0 flex flex-col border-t border-rule-well">
-          {CONTACT_FACTS.map(({id, label, value}) => (
+          {facts.map(({id, label, value}) => (
             <div
               key={id}
               className="flex justify-between gap-4 border-b border-rule-well py-[15px] text-sm"

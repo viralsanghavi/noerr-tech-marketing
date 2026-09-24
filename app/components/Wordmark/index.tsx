@@ -5,9 +5,11 @@ type WordmarkProps = {
 };
 
 const Wordmark = ({className}: WordmarkProps) => (
-  <span className={cn("font-display leading-none tracking-[-0.01em]", className)}>
-    no<span className="text-accent">.</span>err
-  </span>
+  <img 
+    src="/logo.png" 
+    alt="no.err logo" 
+    className={cn("object-contain", className)} 
+  />
 );
 
 export default Wordmark;

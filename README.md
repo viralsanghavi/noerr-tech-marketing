@@ -17,9 +17,10 @@ so dev works offline and without Sanity credentials.
 Copy is edited in the Sanity Studio at [noerrtech.sanity.studio](https://noerrtech.sanity.studio).
 Its source lives in `studio-noerr-tech/` in this repo — a separate app with its
 own dependencies, so run `npm install` in there before `npm run dev` or
-`npx sanity deploy`. Because there is no server at runtime,
-**content is baked in at build time — an edit is not live until the site is
-rebuilt and redeployed.**
+`npx sanity deploy`.
+
+Because there is no server at runtime, **content is baked in at build time — an
+edit is not live until the site is rebuilt and redeployed.**
 
 ```sh
 npm run content        # pull from Sanity into app/data/generated/content.json
@@ -27,37 +28,35 @@ npm run build:content  # pull, then build
 ```
 
 `npm run content` validates everything it fetches and writes nothing if the
-content is unusable, so a bad fetch can't overwrite a good snapshot. It fails on:
+content is unusable, so a bad fetch can't overwrite a good snapshot. Validation
+is strict on purpose — every list requires at least one item, so the silent
+failure mode (a wrong dataset or unpublished drafts blanking a section) becomes a
+visible error. It also fails on a project whose media is missing from
+`public/work`.
 
-- a missing or malformed field, or an empty list (usually a wrong dataset, or
-  documents left unpublished)
-- a project whose media is missing from `public/work`
+Commit the regenerated `content.json` — it is the snapshot every build starts from.
 
-Commit the regenerated `content.json` — it is the fallback every build starts from.
+`app/data/site.ts` adapts that JSON into the shapes in `app/data/types.ts`, and
+`app/routes/_index.tsx` is the only module that reads it — every section takes
+plain props.
 
 Ordering is whatever the Studio's drag-and-drop lists say. The work strip derives
-its `01…07` numbering from list position, so reordering in the Studio is all it
-takes to renumber the site.
+its `01…07` numbering and its pinned-scroll height from list position, so adding
+or reordering projects needs no code change.
 
 ### Project media
 
 Posters and clips are **not** in Sanity — Sanity file assets are served as raw
-downloads with no transcoding, which is the wrong home for autoplaying video. They
-live in `public/work` and are captured from the live site:
+downloads with no transcoding, which is the wrong home for autoplaying video.
+They live in `public/work`, keyed by each project's `mediaSlug`:
 
 ```sh
 npm run capture -- <mediaSlug> <url> --depth=4
 ```
 
 That writes `<mediaSlug>.jpg` (2880×1800 poster), `.mp4` and `.webm`
-(960×600, 24fps, 3s). The `mediaSlug` must match the field on the project in the
-Studio. Adding a project in the Studio therefore still needs this one step in the
-repo — the build fails loudly if the files are missing.
-
-### Adding a project
-
-Adding a 7th+ panel also means updating the pinned-scroll height in
-`app/components/Work/index.tsx` — see the comment above `PANEL_VW`.
+(960×600, 24fps, 3s). Adding a project in the Studio still needs this one step
+in the repo, or its panel renders a missing poster.
 
 ## Deployment
 

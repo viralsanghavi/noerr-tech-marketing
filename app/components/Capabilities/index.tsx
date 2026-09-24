@@ -1,29 +1,66 @@
 import {motion, useReducedMotion} from "framer-motion";
+import {useMemo} from "react";
 import Container from "~/components/Container";
 import Reveal, {RESOLVE_EASE} from "~/components/motion/Reveal";
-import {CAPABILITIES} from "~/data/site";
+import ThreeStage from "~/components/three/ThreeStage";
+import type {OrbitData} from "~/components/three/scenes/orbit";
+import type {Capability} from "~/data/types";
+import {useSceneAvailability} from "~/hooks/useSceneAvailability";
+import {cn} from "~/lib/utils";
 
-const Capabilities = () => {
+const loadOrbit = () =>
+  import("~/components/three/scenes/orbit").then((module) => module.mountOrbit);
+
+type CapabilitiesProps = {
+  capabilities: Capability[];
+  /** Orbit the outer ring of the 3D intro. */
+  clients: string[];
+};
+
+/**
+ * Desktop with motion opens on a pinned orbit — the client's business at the
+ * centre, our services close in, past clients further out. The card grid below
+ * carries the detail either way.
+ */
+const Capabilities = ({capabilities, clients}: CapabilitiesProps) => {
   const prefersReducedMotion = useReducedMotion();
+  const {sceneEnabled, markSceneUnavailable} = useSceneAvailability();
+  const sceneData = useMemo<OrbitData>(
+    () => ({services: capabilities.map(({title}) => title), clients}),
+    [capabilities, clients],
+  );
 
   return (
-    <section id="capabilities" className="scroll-mt-20 py-16 lg:py-[132px]">
-      <Container>
-        <Reveal className="mb-10 grid gap-4 md:grid-cols-[140px_1fr] md:gap-12 lg:mb-16">
-          <p className="label">03 — Capabilities</p>
-          <div>
-            <h2 className="m-0 max-w-[20ch] text-balance font-display text-[clamp(28px,4vw,48px)] font-normal leading-[1.1] tracking-[-0.015em]">
-              One team from design file to deploy.
-            </h2>
-            <p className="mt-3.5 max-w-[58ch] text-ink-soft">
-              No handoff gap between the people who draw it and the people who build it —
-              which is where most of the errors get in.
-            </p>
-          </div>
-        </Reveal>
+    <section
+      id="capabilities"
+      className={cn("scroll-mt-20", sceneEnabled ? "pb-16 lg:pb-[132px]" : "py-16 lg:py-[132px]")}
+    >
+      {sceneEnabled ? (
+        <ThreeStage
+          loadScene={loadOrbit}
+          data={sceneData}
+          screens={2.4}
+          onUnavailable={markSceneUnavailable}
+        >
+          {() => (
+            <Container className="flex h-full items-center">
+              <div className="grid max-w-[460px] gap-4">
+                <CapabilitiesIntro />
+              </div>
+            </Container>
+          )}
+        </ThreeStage>
+      ) : (
+        <Container>
+          <Reveal className="mb-10 grid gap-4 md:grid-cols-[140px_1fr] md:gap-12 lg:mb-16">
+            <CapabilitiesIntro />
+          </Reveal>
+        </Container>
+      )}
 
+      <Container>
         <div className="grid gap-px border border-rule-soft bg-rule-soft sm:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map(({id, eyebrow, title, summary, tools}, i) => (
+          {capabilities.map(({id, eyebrow, title, summary, tools}, i) => (
             <motion.article
               key={id}
               initial={prefersReducedMotion ? false : {opacity: 0, y: 16}}
@@ -56,3 +93,19 @@ const Capabilities = () => {
 };
 
 export default Capabilities;
+
+/** Label then heading; the parent decides whether they stack or sit side by side. */
+const CapabilitiesIntro = () => (
+  <>
+    <p className="label m-0">03 — What we do</p>
+    <div>
+      <h2 className="m-0 max-w-[20ch] text-balance font-display text-[clamp(28px,4vw,52px)] font-normal leading-[1.08] tracking-[-0.015em]">
+        Everything your business needs online, <span className="text-accent">from one team.</span>
+      </h2>
+      <p className="mt-3.5 max-w-[48ch] text-ink-soft">
+        Website, app, bookings, payments and aftercare — built and looked after by the same
+        people, so nothing gets lost between teams.
+      </p>
+    </div>
+  </>
+);

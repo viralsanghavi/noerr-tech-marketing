@@ -2,10 +2,12 @@ import {motion, useMotionValueEvent, useScroll} from "framer-motion";
 import {useState} from "react";
 import Container from "~/components/Container";
 import Wordmark from "~/components/Wordmark";
-import {NAV_LINKS} from "~/data/site";
+import type {NavLinkItem} from "~/data/types";
 import {cn} from "~/lib/utils";
 
-const Nav = () => {
+type NavProps = {links: NavLinkItem[]};
+
+const Nav = ({links}: NavProps) => {
   const {scrollY} = useScroll();
   const [lifted, setLifted] = useState(false);
 
@@ -44,11 +46,11 @@ const Nav = () => {
     >
       <Container className="flex h-[70px] items-center justify-between gap-6">
         <a href="#top" aria-label="no.err — home" onClick={(e) => handleScroll(e, "#top")}>
-          <Wordmark className="text-[26px]" />
+          <Wordmark className="h-10 sm:h-12 w-auto" />
         </a>
 
         <nav className="flex items-center gap-7">
-          {NAV_LINKS.map(({id, name, href, variant}) =>
+          {links.map(({id, name, href, variant}) =>
             variant === "button" ? (
               <a
                 key={id}

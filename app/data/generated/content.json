@@ -336,6 +336,16 @@
       "initials": "PR"
     },
     {
+      "id": "838ea695-fe1d-404a-b1f3-b25a43c7c928",
+      "status": "approved",
+      "quote": "The only team we've worked with that actually stayed after launch. Two years on, they still ship every release for us.ss",
+      "metric": "2 years, still shipping",
+      "name": "Meera Shah",
+      "role": "Chief Operating Officer",
+      "company": "Lantern Health",
+      "initials": "MS"
+    },
+    {
       "id": "89c03c4e-b8fd-4085-8156-43a39d7b0f35",
       "status": "placeholder",
       "quote": "Checkout was losing us orders and nobody could tell us why. They found it in two days and rebuilt the flow properly.",
@@ -344,16 +354,6 @@
       "role": "Head of Ecommerce",
       "company": "Northbay Supply",
       "initials": "DO"
-    },
-    {
-      "id": "838ea695-fe1d-404a-b1f3-b25a43c7c928",
-      "status": "placeholder",
-      "quote": "The only team we've worked with that actually stayed after launch. Two years on, they still ship every release for us.",
-      "metric": "2 years, still shipping",
-      "name": "Meera Shah",
-      "role": "Chief Operating Officer",
-      "company": "Lantern Health",
-      "initials": "MS"
     }
   ],
   "contactFacts": [
