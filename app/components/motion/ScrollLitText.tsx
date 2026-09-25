@@ -1,10 +1,17 @@
-import {motion, useReducedMotion, useScroll, useTransform} from "framer-motion";
+import {motion, useReducedMotion, useTransform} from "framer-motion";
 import type {MotionValue} from "framer-motion";
-import {useRef} from "react";
 import {cn} from "~/lib/utils";
+
+/** How many words' worth of progress each word takes to light, so neighbours overlap. */
+const WORD_SPAN = 1.6;
 
 type ScrollLitTextProps = {
   text: string;
+  /**
+   * 0 → 1 across the reveal, owned by the caller. The text can't measure its own
+   * position: inside a pinned section it stops moving, so its progress would stall.
+   */
+  progress: MotionValue<number>;
   className?: string;
   /** Words that should resolve in the accent colour rather than full ink. */
   accent?: string[];
@@ -15,14 +22,8 @@ type ScrollLitTextProps = {
  * sentence resolving the same way a draft does. Progress drives opacity
  * directly, so the reveal scrubs with the scrollbar rather than firing once.
  */
-const ScrollLitText = ({text, className, accent = []}: ScrollLitTextProps) => {
-  const ref = useRef<HTMLParagraphElement>(null);
+const ScrollLitText = ({text, progress, className, accent = []}: ScrollLitTextProps) => {
   const prefersReducedMotion = useReducedMotion();
-
-  const {scrollYProgress} = useScroll({
-    target: ref,
-    offset: ["start 0.9", "end 0.55"],
-  });
 
   const words = text.split(" ");
 
@@ -31,12 +32,12 @@ const ScrollLitText = ({text, className, accent = []}: ScrollLitTextProps) => {
   }
 
   return (
-    <p ref={ref} className={cn("flex flex-wrap", className)}>
+    <p className={cn("flex flex-wrap", className)}>
       {words.map((word, i) => (
         <LitWord
           key={`${i}-${word}`}
-          progress={scrollYProgress}
-          range={[i / words.length, (i + 1.6) / words.length]}
+          progress={progress}
+          range={[i / (words.length + WORD_SPAN - 1), (i + WORD_SPAN) / (words.length + WORD_SPAN - 1)]}
           accented={accent.includes(word.replace(/[^A-Za-z]/g, ""))}
         >
           {word}

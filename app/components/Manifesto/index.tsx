@@ -19,6 +19,8 @@ const Manifesto = () => {
     offset: ["start start", "end end"],
   });
 
+  // The words finish lighting before the rules lock and the caption lands.
+  const litProgress = useTransform(scrollYProgress, [0.05, 0.7], [0, 1]);
   // Two ghost rules slide into register with the solid one as you scroll.
   const topX = useTransform(scrollYProgress, [0, 0.75], ["-28%", "0%"]);
   const bottomX = useTransform(scrollYProgress, [0, 0.75], ["28%", "0%"]);
@@ -33,6 +35,7 @@ const Manifesto = () => {
 
           <ScrollLitText
             text={STATEMENT}
+            progress={litProgress}
             accent={["third", "nothing"]}
             className="m-0 max-w-[20ch] font-display text-[clamp(28px,4.6vw,64px)] font-normal leading-[1.14] tracking-[-0.02em] lg:max-w-[24ch]"
           />

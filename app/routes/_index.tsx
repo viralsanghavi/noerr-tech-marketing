@@ -25,7 +25,11 @@ import {
   TESTIMONIALS,
 } from "~/data/site";
 
-const APPROVED_TESTIMONIAL = TESTIMONIALS.find(({approved}) => approved);
+/** Placeholder quotes stay in the CMS; only approved ones reach the page. */
+const APPROVED_TESTIMONIALS = TESTIMONIALS.filter(({approved}) => approved);
+const FEATURED_TESTIMONIAL = APPROVED_TESTIMONIALS[0];
+/** The first quote already leads the trust band, so the wall needs a second to earn its place. */
+const SHOW_CLIENTS = APPROVED_TESTIMONIALS.length >= 2;
 /** Studio order decides which client site the hero opens with. */
 const HERO_SHOWCASE = PROJECTS[0];
 
@@ -52,7 +56,7 @@ export default function Index() {
         ) : null}
         <TrustBand
           stats={STATS}
-          testimonial={APPROVED_TESTIMONIAL}
+          testimonial={FEATURED_TESTIMONIAL}
           responseTime={RESPONSE_TIME}
         />
         <Marquee items={MARQUEE_ITEMS} />
@@ -60,7 +64,7 @@ export default function Index() {
         <Manifesto />
         <Capabilities capabilities={CAPABILITIES} clients={CLIENT_NAMES} />
         <Method steps={METHOD_STEPS} />
-        <Clients testimonials={TESTIMONIALS} />
+        {SHOW_CLIENTS ? <Clients testimonials={APPROVED_TESTIMONIALS} /> : null}
         <Contact email={CONTACT_EMAIL} facts={CONTACT_FACTS} />
       </main>
       <Footer />
